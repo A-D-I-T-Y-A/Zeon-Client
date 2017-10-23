@@ -1,11 +1,11 @@
-package youtube.gui;
+package zeonClient.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
-import youtube.main.Category;
-import youtube.main.YouTube;
-import youtube.mods.Mod;
+import zeonClient.main.Category;
+import zeonClient.main.YouTube;
+import zeonClient.mods.Mod;
 
 public class GuiIngameHook extends GuiIngame  {
 	

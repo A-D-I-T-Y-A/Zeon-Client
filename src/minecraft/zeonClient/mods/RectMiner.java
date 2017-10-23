@@ -1,4 +1,4 @@
-package youtube.mods;
+package zeonClient.mods;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,9 +21,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import youtube.main.Category;
-import youtube.utils.BlockUtils;
-import youtube.utils.RotationUtils;
+import zeonClient.main.Category;
+import zeonClient.utils.BlockUtils;
+import zeonClient.utils.RotationUtils;
 
 public class RectMiner extends Mod {
 

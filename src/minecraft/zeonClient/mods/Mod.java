@@ -1,7 +1,7 @@
-package youtube.mods;
+package zeonClient.mods;
 
 import net.minecraft.client.Minecraft;
-import youtube.main.Category;
+import zeonClient.main.Category;
 
 public class Mod {
 	public static Minecraft mc = Minecraft.getMinecraft();

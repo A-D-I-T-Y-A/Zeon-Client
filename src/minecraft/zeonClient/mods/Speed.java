@@ -1,9 +1,9 @@
-package youtube.mods;
+package zeonClient.mods;
 
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.entity.MoverType;
-import youtube.main.Category;
+import zeonClient.main.Category;
 
 public class Speed extends Mod {
 

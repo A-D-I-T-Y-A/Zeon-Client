@@ -1,9 +1,8 @@
-package youtube.main;
+package zeonClient.main;
 
 import java.util.ArrayList;
 
-import youtube.mods.*;
-import youtube.mods.Mod;
+import zeonClient.mods.*;
 
 public class YouTube {
 	

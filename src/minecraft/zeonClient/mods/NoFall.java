@@ -1,9 +1,9 @@
-package youtube.mods;
+package zeonClient.mods;
 
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.network.play.client.CPacketPlayer;
-import youtube.main.Category;
+import zeonClient.main.Category;
 
 public class NoFall extends Mod {
 

@@ -1,4 +1,4 @@
-package youtube.mods;
+package zeonClient.mods;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,13 +19,13 @@ import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import youtube.main.Category;
-import youtube.utils.BlockUtils;
-import youtube.utils.BlockUtils.BlockValidator;
-import youtube.utils.WBlock;
-import youtube.utils.WMinecraft;
-import youtube.utils.WPlayer;
-import youtube.utils.WPlayerController;
+import zeonClient.main.Category;
+import zeonClient.utils.BlockUtils;
+import zeonClient.utils.WBlock;
+import zeonClient.utils.WMinecraft;
+import zeonClient.utils.WPlayer;
+import zeonClient.utils.WPlayerController;
+import zeonClient.utils.BlockUtils.BlockValidator;
 
 public class NukeMiner extends Mod {
 

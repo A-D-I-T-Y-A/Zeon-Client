@@ -1,8 +1,8 @@
-package youtube.mods;
+package zeonClient.mods;
 
 import org.lwjgl.input.Keyboard;
 
-import youtube.main.Category;
+import zeonClient.main.Category;
 
 public class LongJump extends Mod{
 

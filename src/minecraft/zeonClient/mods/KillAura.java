@@ -1,4 +1,4 @@
-package youtube.mods;
+package zeonClient.mods;
 
 import java.util.Iterator;
 
@@ -15,7 +15,7 @@ import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import youtube.main.Category;
+import zeonClient.main.Category;
 
 public class KillAura extends Mod {
 
