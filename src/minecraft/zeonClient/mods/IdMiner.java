@@ -25,13 +25,15 @@ import zeonClient.main.Category;
 import zeonClient.utils.BlockUtils;
 import zeonClient.utils.RotationUtils;
 
-public class RectMiner extends Mod {
+public class IdMiner extends Mod {
 
 	private int ticks = 100;
 	private int idle_ticks = 0;
-	private int jump_ticks=0;
+	private int jump_ticks = 0;
+	private int sell_ticks = 99999;
 	private int id1 = 133;
 	private int id2 = 57;
+	private int rotationcount = 0;
 	
 	private float yaw = 0;
 	private float pitch = 0;
@@ -40,8 +42,8 @@ public class RectMiner extends Mod {
 	private Vec3d eyesPos = null;
 	
 	
-	public RectMiner() {
-		super("RectMiner", "RectMiner", Keyboard.KEY_G, Category.OTHER);
+	public IdMiner() {
+		super("IdMiner", "IdMiner", Keyboard.KEY_G, Category.OTHER);
 		reachable = new ArrayList<BlockPos>();
 	}
 	
@@ -49,14 +51,52 @@ public class RectMiner extends Mod {
 	public void onUpdate() {
 		if(this.isToggled()) {
 			
+			//idle
 			if(idle_ticks > 0) {
 				idle_ticks--;
-				if(idle_ticks == 0)
-					jump_ticks = 100;
 				System.out.println("Waiting for ticks");
 				return;
 			}
 			
+			//Sell items
+			if(sell_ticks <= 187) {
+				
+				if(sell_ticks <= 50) {
+					mc.player.moveRelative(0F, 0F, 0.1F, 1F);
+				}
+				else if(sell_ticks <= 120) {
+					mc.player.moveRelative(-0.1F, 0F, 0F, 1F);
+				}
+				else if(sell_ticks <= 185) {
+					mc.player.moveRelative(0F, 0F, 0.1F, 1F);
+				}
+				
+				if(sell_ticks == 185) {
+					mc.gameSettings.keyBindJump.pressed = false;
+					mc.gameSettings.keyBindLeft.pressed = false;
+					mc.gameSettings.keyBindRight.pressed = false;
+					mc.player.rotationYaw = 0F;
+					mc.player.rotationPitch = 0F;
+					mc.player.rotationYaw += 90F;
+				}
+				
+				if(sell_ticks == 186) {
+					mc.gameSettings.keyBindUseItem.pressed = true;
+				}
+				
+				if(sell_ticks == 187) {
+					mc.gameSettings.keyBindUseItem.pressed = false;
+					mc.player.sendChatMessage("/warp z");
+					idle_ticks = 100;
+					jump_ticks = 100;
+				}
+				
+				sell_ticks++;
+				
+				return;
+			}
+			
+			// Walk back to mine
 			if(jump_ticks > 0) {
 				
 				if(jump_ticks < 50)
@@ -73,34 +113,43 @@ public class RectMiner extends Mod {
 				}
 				
 				mc.gameSettings.keyBindForward.pressed = true;
+				
 				jump_ticks--;
 				
 				if(jump_ticks == 0) {
 					mc.gameSettings.keyBindJump.pressed = false;
 					mc.gameSettings.keyBindLeft.pressed = false;
 					mc.gameSettings.keyBindRight.pressed = false;
+					mc.player.rotationPitch += 35F;
+					mc.player.rotationYaw += 5F;
 				}
 				
 				return;
 			}
 			
-			if(mc.player.inventory.getFirstEmptyStack() == -1) {
-				mc.player.sendChatMessage("/warp z");
-				mc.gameSettings.keyBindAttack.pressed = false;
-				mc.gameSettings.keyBindForward.pressed = false;
-				Toggle();
-				return;
-			}
-			
+			//tp if at bottom
 			if(checkUnderPlayer()) {
 				mc.player.sendChatMessage("/warp z");
 				mc.gameSettings.keyBindForward.pressed = false;
 				mc.gameSettings.keyBindAttack.pressed = false;
 				idle_ticks = 100;
+				jump_ticks = 100;
 				System.out.println("Glowstone Under me");
 				return;
 			}
 			
+			//Check for full inventory
+			if(mc.player.inventory.getFirstEmptyStack() == -1) {
+				mc.player.sendChatMessage("/warp z");
+				mc.gameSettings.keyBindAttack.pressed = false;
+				mc.gameSettings.keyBindForward.pressed = false;
+				sell_ticks = 0;
+				idle_ticks = 100;
+				return;
+			}
+			
+			
+			//init look pos
 			if(eyesPos == null)
 				eyesPos  = RotationUtils.getEyesPos();
 			
@@ -109,6 +158,8 @@ public class RectMiner extends Mod {
 				yaw = mc.player.rotationYaw;
 				pitch = mc.player.rotationPitch;
 			}
+			
+			
 			//Legit Nuker
 			currentBlock = null;
 			
@@ -123,6 +174,7 @@ public class RectMiner extends Mod {
 					else {
 						currentBlock = pos;
 						mc.gameSettings.keyBindForward.pressed = false;
+						rotationcount = 0;
 						break;
 					}
 				}
@@ -131,6 +183,7 @@ public class RectMiner extends Mod {
 			else
 				currentBlock = null;
 			
+			//If no valid block available, mine normally
 			if(currentBlock == null) {
 				
 
@@ -147,6 +200,14 @@ public class RectMiner extends Mod {
 				if((M == Material.WOOD || M == Material.ROCK || M == Material.GLASS) && (Block.getIdFromBlock(mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock()) != 56 && 
 						Block.getIdFromBlock(mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock()) != 129)) {
 					mc.player.rotationYaw += 90F;
+					rotationcount++;
+					if(rotationcount > 4) {
+						mc.player.sendChatMessage("/warp z");
+						mc.gameSettings.keyBindForward.pressed = false;
+						mc.gameSettings.keyBindAttack.pressed = false;
+						idle_ticks = 100;
+						jump_ticks = 100;
+					}
 					mc.player.moveRelative(0.25F, 0F, 0F, 1F);
 				}
 				
@@ -180,6 +241,9 @@ public class RectMiner extends Mod {
 		yaw = 0;
 		pitch = 0;
 		idle_ticks = 0;
+		jump_ticks = 0;
+		sell_ticks = 9999;
+		rotationcount = 0;
 	}
 	
 	public void FindReachableBlocks() {

@@ -26,9 +26,9 @@ public class YouTube {
 		//6
 		addMod(new KillAura());
 		//7
-		addMod(new RectMiner());
+		addMod(new IdMiner());
 		//8
-		addMod(new NukeMiner());
+		addMod(new BoxMiner());
 	}
 	
 	public static void addMod(Mod m) {
